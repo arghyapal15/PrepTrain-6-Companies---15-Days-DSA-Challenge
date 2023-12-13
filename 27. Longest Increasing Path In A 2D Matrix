@@ -1,0 +1,35 @@
+#include <bits/stdc++.h> 
+int sol(int i,int j,vector<vector<int>>&arr,vector<vector<int>>&path,vector<vector<int>>&dp){
+        if(i<0 || j<0 || i>=arr.size() || j >=arr[0].size()) return 0 ;
+
+        int maxp = 1 ;
+
+        // for left -> i,j-1
+        if(dp[i][j]!=-1) return dp[i][j];
+        if( j>0 && arr[i][j]<arr[i][j-1]) maxp = max(maxp,1+sol(i,j-1,arr,path,dp));
+
+        // for right -> i,j+1
+        if( j<arr[0].size()-1 && arr[i][j]<arr[i][j+1])  maxp = max(maxp,1 + sol(i,j+1,arr,path,dp));
+        // for up -> i-1,j
+        if( i>0 && arr[i][j]<arr[i-1][j])  maxp = max(maxp,1+ sol(i-1,j,arr,path,dp));
+        // for down -> i+1,j
+        if(i<arr.size()-1 && arr[i][j]<arr[i+1][j])  maxp = max(maxp,1+ sol(i+1,j,arr,path,dp));
+
+        path[i][j] = maxp;
+        return dp[i][j]= path[i][j] ;
+    }
+
+int longestIncreasingPath(vector<vector<int>> &mat, int n, int m)
+{
+    // Write your code here
+        int ans = 1 ;
+        vector<vector<int>>path(n,vector<int>(m,1));
+        vector<vector<int>>dp(n,vector<int>(m,-1));
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                ans = max(ans,sol(i,j,mat,path,dp));
+            }
+        }
+        return ans ;
+}
