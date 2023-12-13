@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>  
+
+// level order travesal method
+
+vector<int> printRightView(BinaryTreeNode<int>* root) {
+
+ 
+
+vector<int> ans;
+
+if(root == NULL)
+
+{
+
+return ans;
+
+}
+
+ 
+
+queue<pair<BinaryTreeNode<int>*,int>>q;
+
+ 
+
+// keeping track of root at a particular level
+
+map<int,int> right;
+
+ 
+
+q.push(make_pair(root,0));
+
+ 
+
+while(!q.empty()){
+
+pair<BinaryTreeNode<int>*,int> front=q.front();
+
+q.pop();
+
+ 
+
+BinaryTreeNode<int>* rightnode=front.first;
+
+int level=front.second;
+
+ 
+
+// if a node already exist at that level ,do not update in map
+
+ 
+
+if (right.find(level) == right.end()) {
+
+right[level] = rightnode->data;
+
+}
+
+ 
+
+if(rightnode->right){
+
+q.push(make_pair(rightnode->right,level+1));
+
+}
+
+ 
+
+if(rightnode->left){
+
+q.push(make_pair(rightnode->left,level+1));
+
+}
+
+ 
+
+}
+
+for (auto i : right) {
+
+ans.push_back(i.second);
+
+}
+
+}
