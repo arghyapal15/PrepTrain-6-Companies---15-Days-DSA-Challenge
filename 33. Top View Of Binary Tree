@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+
+vector<int> getTopView(TreeNode<int> *root)
+
+{
+
+    // Write your code here.
+
+    map<int,queue<int>>m;
+
+    vector<int> ans;
+
+    queue<pair<TreeNode<int>*, int>>q;
+
+    q.push({root,0});
+
+    while(q.empty() == false){
+
+        TreeNode<int>* curr = q.front().first;
+
+        int x = q.front().second;
+
+        // int y = q.front().second.second;
+
+        q.pop();
+
+ 
+
+        // m[x] = curr->data;
+
+        m[x].push(curr->data);
+
+        if(curr->left != NULL) q.push({curr->left, x-1});
+
+        if(curr->right != NULL) q.push({curr->right, x+1});
+
+    }
+
+    for(auto i: m){
+
+        ans.push_back(i.second.front());
+
+    }
+
+    
+
+   
+
+    return ans;
+
+}
