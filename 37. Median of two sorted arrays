@@ -1,0 +1,84 @@
+#include<bits/stdc++.h>
+
+double median(vector<int>& a, vector<int>& b) {
+
+    // Write your code here.
+
+    int n=a.size();
+
+    int m=b.size();
+
+ 
+
+    if(n>m){
+
+        return median(b, a);
+
+    }
+
+    // apply binary search in smaller array 
+
+    int low=0;
+
+    int high=n;
+
+    while(low<=high){
+
+      // now partition of an array a 
+
+      // work like mid just like in binary search we use it
+
+      int partition_a=(low+high)/2;
+
+      int partition_b=(n+m+1)/2 - partition_a;
+
+ 
+
+      int maxleft_a=(partition_a==0) ? INT_MIN :a[partition_a-1];
+
+      int maxright_a=(partition_a==n) ? INT_MAX :a[partition_a];
+
+      int maxleft_b=(partition_b==0) ? INT_MIN :b[partition_b-1];
+
+      int maxright_b=(partition_b==m) ? INT_MAX :b[partition_b];
+
+      if(maxleft_a<=maxright_b && maxleft_b<=maxright_a){
+
+ 
+
+          if((n+m)%2==0){
+
+              return ((double(max(maxleft_a,maxleft_b)+min(maxright_b,maxright_a)))/2.0);
+
+          }
+
+          else{
+
+              return ( max(maxleft_a,maxleft_b));
+
+          }
+
+      }
+
+      else if(maxleft_a>maxright_b){
+
+          high=partition_a-1;
+
+     
+
+      }
+
+      else{
+
+     low=partition_a+1;
+
+      }
+
+ 
+
+    }
+
+    return -1.0;
+
+
+}
